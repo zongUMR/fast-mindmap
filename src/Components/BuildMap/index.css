@@ -1,0 +1,27 @@
+.buildMapItem {
+  padding-top: 8px;
+  padding-left: 20px;
+}
+
+.buildMapItem::before {
+  content: '*';
+  position: relative;
+  top: 4px;
+}
+
+.buildMapItem-content {
+  padding: 4px;
+  border-bottom: 1px solid #ddd;
+}
+
+.addChild {
+  margin-left: 10px;
+}
+
+.editNode {
+  margin-left: 10px;
+}
+
+.deleteNode {
+  margin-left: 10px;
+}

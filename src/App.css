@@ -1,0 +1,21 @@
+.App {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-input {
+  flex: 1;
+  border-bottom: 1px solid red;
+  overflow: auto;
+  padding: 10px;
+}
+
+.content-input-root {
+  padding: 10px 20px;
+}
+.content-mindmap {
+  padding: 10px;
+  flex: 1;
+}

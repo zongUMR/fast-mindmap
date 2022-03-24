@@ -1,0 +1,10 @@
+.contentRenderer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.diagram-component {
+  flex: 1;
+  margin: 0;
+}

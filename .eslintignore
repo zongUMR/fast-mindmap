@@ -1,0 +1,6 @@
+*.svg
+*.css
+*.test.tsx
+matchMedia.mock
+node_modules
+dist

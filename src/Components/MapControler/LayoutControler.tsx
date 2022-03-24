@@ -1,16 +1,16 @@
-import React from "react";
-import { TreeLayout, Diagram, EnumValue } from "gojs";
-import { Form, Select, Button } from "antd";
+import React from 'react';
+import { TreeLayout, Diagram, EnumValue } from 'gojs';
+import { Form, Select, Button } from 'antd';
 import {
   LAYOUT_ANGLE,
   LAYOUT_ALIGNMENT,
   LAYOUT_SORTING,
   INIT_LAYOUT_OPTIONS,
-} from "@/constants";
-import { useEffect, useState } from "react";
+} from '@/constants';
+import { useEffect, useState } from 'react';
 
-import { LayoutControlerProps, layoutOptions } from "./index.d";
-import "./LayoutControler.css";
+import { LayoutControlerProps, layoutOptions } from './index.d';
+import './LayoutControler.css';
 
 const LayoutControler: React.FC<LayoutControlerProps> = ({
   updateDiagram,
@@ -49,7 +49,7 @@ const LayoutControler: React.FC<LayoutControlerProps> = ({
       >
         <Form.Item name="angle" label="角度">
           <Select style={{ width: 100 }}>
-            {LAYOUT_ANGLE.map((item) => (
+            {LAYOUT_ANGLE.map(item => (
               <Select.Option key={item.label} value={item.value}>
                 {item.label}
               </Select.Option>
@@ -58,7 +58,7 @@ const LayoutControler: React.FC<LayoutControlerProps> = ({
         </Form.Item>
         <Form.Item name="alignment" label="对齐方式">
           <Select style={{ width: 200 }}>
-            {LAYOUT_ALIGNMENT.map((item) => (
+            {LAYOUT_ALIGNMENT.map(item => (
               <Select.Option key={item.label} value={item.value}>
                 {item.label}
               </Select.Option>
@@ -66,8 +66,8 @@ const LayoutControler: React.FC<LayoutControlerProps> = ({
           </Select>
         </Form.Item>
         <Form.Item name="sorting" label="排序方式">
-          <Select style={{ width: 200 }}>
-            {LAYOUT_SORTING.map((item) => (
+          <Select style={{ width: 80 }}>
+            {LAYOUT_SORTING.map(item => (
               <Select.Option key={item.label} value={item.value}>
                 {item.label}
               </Select.Option>

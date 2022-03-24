@@ -1,14 +1,14 @@
-import { FC, useMemo, useRef, useCallback } from "react";
-import { ReactDiagram } from "gojs-react";
-import { Diagram } from "gojs";
+import { FC, useMemo, useRef, useCallback } from 'react';
+import { ReactDiagram } from 'gojs-react';
+import { Diagram } from 'gojs';
 
-import { NodeType } from "@/app.d";
-import { RenderMapProps, MapType, UpdateDataActionType } from "./index.d";
-import initDiagram from "./initDiagram";
-import { transformData, convertMapToNode } from "./utils";
-import MapControler from "../MapControler";
+import { NodeType } from '@/app.d';
+import { RenderMapProps, MapType, UpdateDataActionType } from './index.d';
+import initDiagram from './initDiagram';
+import { transformData, convertMapToNode } from './utils';
+import MapControler from '../MapControler';
 
-import "./index.css";
+import './index.css';
 
 const RenderMap: FC<RenderMapProps> = ({ setData, data = [] }) => {
   const diagramRef = useRef<ReactDiagram | null>(null);
@@ -27,15 +27,15 @@ const RenderMap: FC<RenderMapProps> = ({ setData, data = [] }) => {
    * @param{function} fn: The function to update diagram's properties
    */
   const updateDiagram = useCallback(
-    (fn) => {
+    fn => {
       if (!diagramRef.current) return;
       const diagram = diagramRef.current.getDiagram() as Diagram;
-      const flag = "change diagram";
+      const flag = 'change diagram';
       diagram.startTransaction(flag);
       fn(diagram);
       diagram.commitTransaction(flag);
     },
-    [diagramRef]
+    [diagramRef],
   );
 
   /*
@@ -48,7 +48,7 @@ const RenderMap: FC<RenderMapProps> = ({ setData, data = [] }) => {
       convertMapToNode(diagramDataJson, nodeData, true);
       setData(nodeData);
     },
-    [setData]
+    [setData],
   );
 
   return (

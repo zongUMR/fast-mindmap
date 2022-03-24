@@ -1,5 +1,5 @@
-import { NodeType } from "@/app.d";
-import { MapType } from "./index.d";
+import { NodeType } from '@/app.d';
+import { MapType } from './index.d';
 
 /*
  * Convert NodeType array to MapType array
@@ -14,7 +14,7 @@ import { MapType } from "./index.d";
  */
 export const transformData = (data: NodeType[], res: MapType[]) => {
   for (const item of data) {
-    const { brush = "black", isRoot, children, key, text, pic } = item;
+    const { brush = 'black', isRoot, children, key, text, pic } = item;
     if (isRoot) {
       res.push({
         key,
@@ -55,7 +55,7 @@ export const transformData = (data: NodeType[], res: MapType[]) => {
 export const convertMapToNode = (
   data: MapType[],
   res: NodeType[],
-  init: boolean = false
+  init: boolean,
 ) => {
   if (data.length === 0) return;
 
@@ -71,11 +71,11 @@ export const convertMapToNode = (
         tempData.push(item);
       }
     }
-    convertMapToNode(tempData, res);
+    convertMapToNode(tempData, res, false);
   } else {
     const tempRes: NodeType[] = [];
     for (const item of data) {
-      const target = res.find((i) => i.key === item.parent);
+      const target = res.find(i => i.key === item.parent);
       if (target) {
         const newItem = { ...item, children: [] };
         target.children.push(newItem);
@@ -84,6 +84,6 @@ export const convertMapToNode = (
         tempData.push(item);
       }
     }
-    convertMapToNode(tempData, tempRes);
+    convertMapToNode(tempData, tempRes, false);
   }
 };

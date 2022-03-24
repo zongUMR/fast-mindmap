@@ -1,22 +1,22 @@
-import { v4 as uuidv4 } from "uuid";
-import { useCallback, useState } from "react";
-import { fromJS } from "immutable";
-import { Input, Button } from "antd";
+import { v4 as uuidv4 } from 'uuid';
+import { useCallback, useState } from 'react';
+import { fromJS } from 'immutable';
+import { Input, Button } from 'antd';
 
-import RenderMap from "./Components/RenderMap";
-import BuildMap from "./Components/BuildMap";
+import RenderMap from './Components/RenderMap';
+import BuildMap from './Components/BuildMap';
 import {
   NodeType,
   AddChildActionType,
   DeleteNodeActionType,
   EditNodeActionType,
-} from "./app.d";
+} from './app.d';
 
-import "./App.css";
+import './App.css';
 
 function App() {
   const [data, setData] = useState<NodeType[]>([]);
-  const [rootValue, setRootValue] = useState("");
+  const [rootValue, setRootValue] = useState('');
 
   /*
    * Add a new child node for certain node
@@ -28,48 +28,48 @@ function App() {
       // dataAccessPath: construct a index path for positon to insert
       const dataAccessPath = changePath.reduce(
         (prev: (string | number)[], curr: number) => {
-          return [...prev, curr, "children"];
+          return [...prev, curr, 'children'];
         },
-        []
+        [],
       );
 
       const key = uuidv4();
-      setData((data) =>
+      setData(data =>
         fromJS(data)
           // @ts-ignore
-          .updateIn(dataAccessPath, (list) =>
+          .updateIn(dataAccessPath, list =>
             list.push({
               ...payload,
               key,
               children: [],
-            })
+            }),
           )
-          .toJS()
+          .toJS(),
       );
     },
-    []
+    [],
   );
 
   /*
    * Delete a node and its all children nodes
    * @param{number[]} changePath - The index path of node to delete
    */
-  const deleteNodeAction: DeleteNodeActionType = useCallback((changePath) => {
+  const deleteNodeAction: DeleteNodeActionType = useCallback(changePath => {
     // Delete the root node directly
     if (changePath.length === 1) {
       // @ts-ignore
-      setData((data) => fromJS(data).deleteIn(changePath).toJS());
+      setData(data => fromJS(data).deleteIn(changePath).toJS());
     } else {
       const dataAccessPath = changePath.reduce(
         (prev: (string | number)[], curr: number) => {
-          return [...prev, curr, "children"];
+          return [...prev, curr, 'children'];
         },
-        []
+        [],
       );
 
       const prefixPath = dataAccessPath.slice(0, -1);
       // @ts-ignore
-      setData((data) => fromJS(data).deleteIn(prefixPath).toJS());
+      setData(data => fromJS(data).deleteIn(prefixPath).toJS());
     }
   }, []);
 
@@ -82,41 +82,41 @@ function App() {
     (changePath, newPayload) => {
       const dataAccessPath = changePath.reduce(
         (prev: (string | number)[], curr: number) => {
-          return [...prev, curr, "children"];
+          return [...prev, curr, 'children'];
         },
-        []
+        [],
       );
       const prefixPath = dataAccessPath.slice(0, -1);
 
-      setData((data) =>
+      setData(data =>
         fromJS(data)
           // @ts-ignore
-          .updateIn(prefixPath, (obj) => {
+          .updateIn(prefixPath, obj => {
             return {
               ...obj.toJS(),
               ...newPayload,
             };
           })
-          .toJS()
+          .toJS(),
       );
     },
-    []
+    [],
   );
 
   // Add a new rootNode to data
   const addRootNode = useCallback(() => {
     const key = uuidv4();
-    setData((d) => [
+    setData(d => [
       ...d,
       {
         text: rootValue,
         isRoot: true,
         key,
-        brush: "black",
+        brush: 'black',
         children: [],
       },
     ]);
-    setRootValue("");
+    setRootValue('');
   }, [rootValue, setData]);
 
   return (
@@ -128,7 +128,7 @@ function App() {
             <Input
               style={{ width: 300 }}
               value={rootValue}
-              onChange={(e) => setRootValue(e.target.value)}
+              onChange={e => setRootValue(e.target.value)}
               onPressEnter={() => {
                 addRootNode();
               }}

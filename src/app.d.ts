@@ -1,7 +1,7 @@
 export type BasicNodeType = {
     brush: string;
     text: string;
-    key: string;
+    key?: string;
     pic?: string;
 };
 

@@ -70,7 +70,7 @@ const EditNode: FC<EditNodeProps> = ({ changePath, editNodeAction, node }) => {
             key: node.key,
           },
           brush !== node.brush,
-          { nodeKey: node.key, brush },
+          { nodeKey: node.key as string, brush },
         );
       }}
     >

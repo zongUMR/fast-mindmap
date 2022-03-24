@@ -1,6 +1,6 @@
-import { FC, useMemo, useRef, useCallback } from 'react';
+import { FC, useEffect, useMemo, useRef, useCallback } from 'react';
 import { ReactDiagram } from 'gojs-react';
-import { Diagram } from 'gojs';
+import { Diagram, Link } from 'gojs';
 
 import { NodeType } from '@/app.d';
 import { RenderMapProps, MapType, UpdateDataActionType } from './index.d';
@@ -10,7 +10,11 @@ import MapControler from '../MapControler';
 
 import './index.css';
 
-const RenderMap: FC<RenderMapProps> = ({ setData, data = [] }) => {
+const RenderMap: FC<RenderMapProps> = ({
+  linkStrokeChange,
+  setData,
+  data = [],
+}) => {
   const diagramRef = useRef<ReactDiagram | null>(null);
 
   /*
@@ -21,6 +25,22 @@ const RenderMap: FC<RenderMapProps> = ({ setData, data = [] }) => {
     transformData(data, res);
     return res;
   }, [data]);
+
+  useEffect(() => {
+    if (!diagramRef.current) return;
+    if (linkStrokeChange.nodeKey && linkStrokeChange.brush) {
+      const diagram = diagramRef.current.getDiagram();
+      const node = diagram?.findNodeForKey(linkStrokeChange.nodeKey);
+      const links = node?.findLinksInto();
+      diagram?.commit(() => {
+        links?.each((l: Link) => {
+          if (l.path?.stroke) {
+            l.path.stroke = linkStrokeChange.brush;
+          }
+        });
+      });
+    }
+  }, [linkStrokeChange.brush, linkStrokeChange.nodeKey]);
 
   /*
    * Update the properties of the diagram to change the diagram content

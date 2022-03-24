@@ -1,10 +1,10 @@
-import { FC } from "react";
-import AddChild from "./AddChild";
-import DeleteNode from "./DeleteNode";
-import EditNode from "./EditNode";
+import { FC } from 'react';
+import AddChild from './AddChild';
+import DeleteNode from './DeleteNode';
+import EditNode from './EditNode';
 
-import { BuildMapProps } from "./index.d";
-import "./index.css";
+import { BuildMapProps } from './index.d';
+import './index.css';
 
 const BuildMap: FC<BuildMapProps> = ({
   mapData,
@@ -27,7 +27,7 @@ const BuildMap: FC<BuildMapProps> = ({
             <EditNode
               changePath={newChangePath}
               editNodeAction={editNodeAction}
-              node={{ text, brush }}
+              node={{ text, brush, key }}
             />
             <DeleteNode
               changePath={newChangePath}

@@ -10,6 +10,7 @@ import {
   AddChildActionType,
   DeleteNodeActionType,
   EditNodeActionType,
+  LinkStrokeChange,
 } from './app.d';
 
 import './App.css';
@@ -17,6 +18,10 @@ import './App.css';
 function App() {
   const [data, setData] = useState<NodeType[]>([]);
   const [rootValue, setRootValue] = useState('');
+  const [linkStrokeChange, setLinkStrokeChange] = useState<LinkStrokeChange>({
+    nodeKey: null,
+    brush: null,
+  });
 
   /*
    * Add a new child node for certain node
@@ -79,7 +84,7 @@ function App() {
    * @param{NodeType} newPayload - The new content for the node
    */
   const editNodeAction: EditNodeActionType = useCallback(
-    (changePath, newPayload) => {
+    (changePath, newPayload, strokeChanged, strokehChangePayload) => {
       const dataAccessPath = changePath.reduce(
         (prev: (string | number)[], curr: number) => {
           return [...prev, curr, 'children'];
@@ -88,6 +93,9 @@ function App() {
       );
       const prefixPath = dataAccessPath.slice(0, -1);
 
+      if (strokeChanged) {
+        setLinkStrokeChange(strokehChangePayload);
+      }
       setData(data =>
         fromJS(data)
           // @ts-ignore
@@ -149,7 +157,11 @@ function App() {
       </div>
       <div className="content-mindmap">
         <h2>内容渲染</h2>
-        <RenderMap data={data} setData={setData} />
+        <RenderMap
+          linkStrokeChange={linkStrokeChange}
+          data={data}
+          setData={setData}
+        />
       </div>
     </div>
   );

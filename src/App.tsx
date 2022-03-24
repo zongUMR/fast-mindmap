@@ -15,34 +15,17 @@ import {
 import "./App.css";
 
 function App() {
-  const [data, setData] = useState<NodeType[]>([
-    {
-      key: "1",
-      brush: "red",
-      text: "test1",
-      isRoot: true,
-      children: [
-        {
-          key: "2",
-          parent: "1",
-          text: "test2",
-          brush: "green",
-          children: [],
-        },
-        {
-          key: "3",
-          parent: "1",
-          text: "test3",
-          brush: "black",
-          children: [],
-        },
-      ],
-    },
-  ]);
+  const [data, setData] = useState<NodeType[]>([]);
   const [rootValue, setRootValue] = useState("");
 
+  /*
+   * Add a new child node for certain node
+   * @param{number[]} changePath - the index path for node to change
+   * @param{NodeType} payload - the payload of new node child
+   */
   const addChildAction: AddChildActionType = useCallback(
     (changePath, payload) => {
+      // dataAccessPath: construct a index path for positon to insert
       const dataAccessPath = changePath.reduce(
         (prev: (string | number)[], curr: number) => {
           return [...prev, curr, "children"];
@@ -67,7 +50,12 @@ function App() {
     []
   );
 
+  /*
+   * Delete a node and its all children nodes
+   * @param{number[]} changePath - The index path of node to delete
+   */
   const deleteNodeAction: DeleteNodeActionType = useCallback((changePath) => {
+    // Delete the root node directly
     if (changePath.length === 1) {
       // @ts-ignore
       setData((data) => fromJS(data).deleteIn(changePath).toJS());
@@ -85,6 +73,11 @@ function App() {
     }
   }, []);
 
+  /*
+   * Update the content for a certain node
+   * @param{number[]} changePath - The index path for node to edit
+   * @param{NodeType} newPayload - The new content for the node
+   */
   const editNodeAction: EditNodeActionType = useCallback(
     (changePath, newPayload) => {
       const dataAccessPath = changePath.reduce(
@@ -110,6 +103,7 @@ function App() {
     []
   );
 
+  // Add a new rootNode to data
   const addRootNode = useCallback(() => {
     const key = uuidv4();
     setData((d) => [

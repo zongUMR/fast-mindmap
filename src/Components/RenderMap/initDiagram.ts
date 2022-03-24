@@ -2,6 +2,9 @@ import { v4 as uuidv4 } from "uuid";
 import * as go from "gojs";
 import { UpdateDataActionType } from "./index.d";
 
+/*
+ * Add a node and a link for diagramAddButton
+ */
 const addNodeAndLink = (_e: go.InputEvent, obj: go.GraphObject) => {
   const adorn = obj.part;
   const diagram = adorn?.diagram;
@@ -24,6 +27,9 @@ const addNodeAndLink = (_e: go.InputEvent, obj: go.GraphObject) => {
   if (newnode !== null) diagram?.scrollToRect(newnode!.actualBounds);
 };
 
+/*
+ * Constrcutor for initilizing Node template in diagram render
+ */
 const addNodeTemplate = (diagram: go.Diagram) => {
   const $ = go.GraphObject.make;
 
@@ -31,6 +37,7 @@ const addNodeTemplate = (diagram: go.Diagram) => {
     selectionObjectName: "TEXT",
   });
 
+  // showing text property
   const textBlock = new go.TextBlock({
     name: "TEXT",
     minSize: new go.Size(30, 15),
@@ -39,6 +46,7 @@ const addNodeTemplate = (diagram: go.Diagram) => {
   textBlock.bind(new go.Binding("text", "text").makeTwoWay());
   node.add(textBlock);
 
+  // showing underline shape with brush color
   const shape = new go.Shape("LineH", {
     stretch: go.GraphObject.Horizontal,
     strokeWidth: 3,
@@ -50,11 +58,13 @@ const addNodeTemplate = (diagram: go.Diagram) => {
   }).bind(new go.Binding("stroke", "brush"));
   node.add(shape);
 
+  // showing picture if the node has
   const pic = new go.Picture({
     name: "PIC",
     margin: 8,
     width: 60,
     height: 60,
+    // when click the image, it will be opened in a new browser tab
     click: (_e, obj: go.GraphObject) => {
       let newTab = window.open() as Window;
       // @ts-ignore
@@ -99,6 +109,9 @@ const addNodeTemplate = (diagram: go.Diagram) => {
   );
 };
 
+/*
+ * Constrcutor for initilizing Link template in diagram render
+ */
 const addLinkTemplate = (diagram: go.Diagram) => {
   const link = new go.Link({
     curve: go.Link.Bezier,
@@ -110,6 +123,7 @@ const addLinkTemplate = (diagram: go.Diagram) => {
   const shape = new go.Shape({
     strokeWidth: 3,
   }).bind(
+    // use the brush color of child node as the color for link
     new go.Binding("stroke", "toNode", (n) => {
       if (n.data.brush) return n.data.brush;
       return "black";
@@ -120,6 +134,11 @@ const addLinkTemplate = (diagram: go.Diagram) => {
   diagram.linkTemplate = link;
 };
 
+/*
+ * Add context menu for diagram
+ * 1. 保存图片: 自动将当前渲染结果保存为图片
+ * 2. 保存数据: 将当前的渲染数据，同步到内容中
+ */
 const addContextMenu = (
   diagram: go.Diagram,
   updateData: UpdateDataActionType
@@ -162,6 +181,12 @@ const addContextMenu = (
   );
 };
 
+/*
+ * Constructor for adding contextmenu on the selected node
+ * 1. 增加/减小字体大小
+ * 2. 删除节点以及所有子节点
+ * 3. Undo/Redo: 撤回/恢复操作
+ */
 const addNodeContextMenu = (diagram: go.Diagram) => {
   const changeTextSize = (obj: go.GraphObject, size: number) => {
     const adorn = obj.part;
@@ -214,6 +239,11 @@ const addNodeContextMenu = (diagram: go.Diagram) => {
   );
 };
 
+/*
+ * The diagram method to initialize the render engine
+ * @param{function} updateData - The method used to update data in edit panel
+ * @return {go.Diagram} mydiagram - An instance of Diagram
+ */
 export default (updateData: UpdateDataActionType): go.Diagram => {
   const myDiagram = new go.Diagram({
     "commandHandler.copiesTree": true,

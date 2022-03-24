@@ -13,12 +13,19 @@ import "./index.css";
 const RenderMap: FC<RenderMapProps> = ({ setData, data = [] }) => {
   const diagramRef = useRef<ReactDiagram | null>(null);
 
+  /*
+   * Transform data from NodeType[] to MapType[] when the source data changed, the digram component will only accept certain data fields
+   */
   const diagramData = useMemo(() => {
     const res: MapType[] = [];
     transformData(data, res);
     return res;
   }, [data]);
 
+  /*
+   * Update the properties of the diagram to change the diagram content
+   * @param{function} fn: The function to update diagram's properties
+   */
   const updateDiagram = useCallback(
     (fn) => {
       if (!diagramRef.current) return;
@@ -31,6 +38,10 @@ const RenderMap: FC<RenderMapProps> = ({ setData, data = [] }) => {
     [diagramRef]
   );
 
+  /*
+   * Update source data in edit panel
+   * @param{MapType[]} diagramDataJson - diagram emit internal json data for editPanel
+   */
   const updateData: UpdateDataActionType = useCallback(
     (diagramDataJson: MapType[]) => {
       const nodeData: NodeType[] = [];

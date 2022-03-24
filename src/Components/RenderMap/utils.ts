@@ -1,6 +1,17 @@
 import { NodeType } from "@/app.d";
 import { MapType } from "./index.d";
 
+/*
+ * Convert NodeType array to MapType array
+ * @param{NodeType[]} data - array to store converted data
+ * @param{MapType[]} res - the result array
+ ***************
+ * exmaple:
+ * data = [{key: '1', isRoot: true, brush: 'black', children: [{ key: '2', isRoot: false, brush: 'red', children: []}] }]
+ * res = []
+ * transformData(data, res);
+ * res => [{key: '1', isRoot: true, brush: 'black'}, { key: '2', parent: '1', isRoot: false, brush: 'red' }]
+ */
 export const transformData = (data: NodeType[], res: MapType[]) => {
   for (const item of data) {
     const { brush = "black", isRoot, children, key, text, pic } = item;
@@ -29,6 +40,18 @@ export const transformData = (data: NodeType[], res: MapType[]) => {
   }
 };
 
+/*
+ * Convert MapType array to NodeType array
+ * @param{MapType[]} data - diagram data to convert
+ * @param{NodeType} res - array to store converted data
+ * @param{boolean} init - should init the root Nodes
+ *******
+ * example
+ * data = [{key: '1', isRoot: true, brush: 'black'}, { key: '2', parent: '1', isRoot: false, brush: 'red' }]
+ * res = []
+ * convertMapToNode(data, res, true);
+ * res => [{key: '1', isRoot: true, brush: 'black', children: [{ key: '2', isRoot: false, brush: 'red', children: []}] }]
+ */
 export const convertMapToNode = (
   data: MapType[],
   res: NodeType[],

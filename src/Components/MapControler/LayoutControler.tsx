@@ -19,6 +19,9 @@ const LayoutControler: React.FC<LayoutControlerProps> = ({
     useState<layoutOptions>(INIT_LAYOUT_OPTIONS);
   const [form] = Form.useForm();
 
+  /*
+   * When the options changed, affect and rerender the diagram content
+   */
   useEffect(() => {
     const update = (diagram: Diagram) => {
       const layout = diagram.layout as TreeLayout;

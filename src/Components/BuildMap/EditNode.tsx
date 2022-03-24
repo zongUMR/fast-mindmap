@@ -10,6 +10,7 @@ const EditNode: FC<EditNodeProps> = ({ changePath, editNodeAction, node }) => {
   const [brush, setBrush] = useState(node.brush);
   const [imageUrl, setImageUrl] = useState(node.pic);
 
+  // Convert the image you uploaded to base64 string, because we don't upload it to a server actually
   const getBase64 = useCallback((img) => {
     const reader = new FileReader();
     reader.readAsDataURL(img);

@@ -53,7 +53,7 @@ const AddChild: FC<AddChildProps> = ({ changePath, addChildAction }) => {
           </Upload>
           <Input
             placeholder="输入内容"
-            style={{ marginBottom: 10 }}
+            style={{ marginBottom: 10, marginTop: 10 }}
             value={text}
             onChange={(e) => setText(e.target.value)}
           />

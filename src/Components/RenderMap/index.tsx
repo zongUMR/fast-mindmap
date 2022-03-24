@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useRef, useCallback } from "react";
+import { FC, useMemo, useRef, useCallback } from "react";
 import { ReactDiagram } from "gojs-react";
 import { Diagram } from "gojs";
 
@@ -43,6 +43,7 @@ const RenderMap: FC<RenderMapProps> = ({ setData, data = [] }) => {
   return (
     <div className="contentRenderer">
       <MapControler updateDiagram={updateDiagram} />
+      <h3>渲染结果</h3>
       <ReactDiagram
         ref={diagramRef}
         divClassName="diagram-component"

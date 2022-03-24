@@ -52,7 +52,7 @@ const EditNode: FC<EditNodeProps> = ({ changePath, editNodeAction, node }) => {
             <Button>修改图片</Button>
           </Upload>
           <Input
-            style={{ marginBottom: 10 }}
+            style={{ marginBottom: 10, marginTop: 10 }}
             value={text}
             onChange={(e) => setText(e.target.value)}
           />

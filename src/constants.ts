@@ -14,19 +14,19 @@ export enum LAYOUT_SORTING_ENUM {
 
 export const LAYOUT_ANGLE = [
     {
-        label: "Right",
+        label: "向右",
         value: LAYOUT_ANGLE_ENUM.Right,
     },
     {
-        label: "Down",
+        label: "向下",
         value: LAYOUT_ANGLE_ENUM.Down,
     },
     {
-        label: "Left",
+        label: "向左",
         value: LAYOUT_ANGLE_ENUM.Left,
     },
     {
-        label: "Up",
+        label: "向上",
         value: LAYOUT_ANGLE_ENUM.Up,
     },
 ];
